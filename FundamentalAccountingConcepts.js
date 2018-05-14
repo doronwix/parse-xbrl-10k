@@ -58,7 +58,22 @@ function load(xbrlDoc) {
 
     // CommitmentsAndContingencies
     self.xbrl.fields['CommitmentsAndContingencies'] = self.xbrl.getFactValue('us-gaap:CommitmentsAndContingencies', 'Instant') || 0;
-
+    
+    //new fields:
+    // OperatingLeasesFutureMinimumPaymentsDueCurrent 
+    self.xbrl.fields['OperatingLeasesFutureMinimumPaymentsDueCurrent'] = self.xbrl.getFactValue('us-gaap:OperatingLeasesFutureMinimumPaymentsDueCurrent', 'Instant') || 0;
+	
+	self.xbrl.fields['DeferredTaxAssetsTaxCreditCarryforwardsOther'] = self.xbrl.getFactValue('us-gaap:DeferredTaxAssetsTaxCreditCarryforwardsOther', 'Instant');
+	
+	self.xbrl.fields['LongTermDebtFairValue'] = self.xbrl.getFactValue('us-gaap:LongTermDebtFairValue', 'Instant') || 0;
+	
+	
+	//InventoryWorkInProcess
+	self.xbrl.fields['InventoryWorkInProcess'] = self.xbrl.getFactValue('us-gaap:InventoryWorkInProcess', 'Instant') || 0;
+	
+	//RestrictedCashAndCashEquivalents
+	self.xbrl.fields['RestrictedCashAndCashEquivalents'] = self.xbrl.getFactValue('us-gaap:RestrictedCashAndCashEquivalents', 'Instant') || 0;	
+  //end new fields:
     // TemporaryEquity
     self.xbrl.fields['TemporaryEquity'] = self.xbrl.getFactValue('us-gaap:TemporaryEquityRedemptionValue', 'Instant') ||
     self.xbrl.getFactValue('us-gaap:RedeemablePreferredStockCarryingAmount', 'Instant') ||
