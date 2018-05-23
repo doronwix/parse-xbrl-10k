@@ -282,6 +282,7 @@ function load(xbrlDoc) {
     self.xbrl.getFactValue("us-gaap:CostOfGoodsSold", "Duration") ||
     self.xbrl.getFactValue("us-gaap:CostOfGoodsAndServicesSold", "Duration") || 0;
 
+    self.xbrl.fields['RandDExpense'] = self.xbrl.getFactValue("us-gaap:ResearchAndDevelopmentExpense", "Duration") || 0;
     // GrossProfit
     self.xbrl.fields['GrossProfit'] = self.xbrl.getFactValue("us-gaap:GrossProfit", "Duration") ||
     self.xbrl.getFactValue("us-gaap:GrossProfit", "Duration") || 0;
