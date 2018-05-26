@@ -279,10 +279,12 @@ function load(xbrlDoc) {
     // CostOfRevenue
     self.xbrl.fields['CostOfRevenue'] = self.xbrl.getFactValue("us-gaap:CostOfRevenue", "Duration") ||
     self.xbrl.getFactValue("us-gaap:CostOfServices", "Duration") ||
-    self.xbrl.getFactValue("us-gaap:CostOfGoodsSold", "Duration") ||
+    self.xbrl.getFactValue("us-gaap:CostOfSellingGeneralAndAdministrativeExpenseGoodsSold", "Duration") ||
     self.xbrl.getFactValue("us-gaap:CostOfGoodsAndServicesSold", "Duration") || 0;
 
-    self.xbrl.fields['RandDExpense'] = self.xbrl.getFactValue("us-gaap:ResearchAndDevelopmentExpense", "Duration") || 0;
+    self.xbrl.fields['RandDexpense'] = self.xbrl.getFactValue("us-gaap:ResearchAndDevelopmentExpense", "Duration") || 0;
+    self.xbrl.fields['sgandAexpenses'] = self.xbrl.getFactValue("us-gaap:SellingGeneralAndAdministrativeExpense", "Duration") || 0;
+
     // GrossProfit
     self.xbrl.fields['GrossProfit'] = self.xbrl.getFactValue("us-gaap:GrossProfit", "Duration") ||
     self.xbrl.getFactValue("us-gaap:GrossProfit", "Duration") || 0;
