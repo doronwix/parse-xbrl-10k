@@ -282,10 +282,23 @@ function load(xbrlDoc) {
     self.xbrl.getFactValue("us-gaap:CostOfSellingGeneralAndAdministrativeExpenseGoodsSold", "Duration") ||
     self.xbrl.getFactValue("us-gaap:CostOfGoodsAndServicesSold", "Duration") || 0;
 
+    //new fields
     self.xbrl.fields['RandDexpense'] = self.xbrl.getFactValue("us-gaap:ResearchAndDevelopmentExpense", "Duration") || 0;
-    self.xbrl.fields['SGandAexpenses'] = self.xbrl.getFactValue("us-gaap:SellingGeneralAndAdministrativeExpense", "Duration") || 0;
+    self.xbrl.fields['SGandAexpenses'] = self.xbrl.getFactValue("us-gaap:SellingGeneralAndAdministrativeExpense", "Duration") ||
+    self.xbrl.getFactValue("us-gaap:OperatingLeasesFutureMinimumPaymentsDueInFourYears", "Instant") || 0; 
+    
     self.xbrl.fields['OperatingIncome'] = self.xbrl.getFactValue("us-gaap:OperatingIncomeLoss", "Duration") || 0;
 
+    self.xbrl.fields['TaxPaid'] = self.xbrl.getFactValue("us-gaap:IncomeTaxesPaidNet", "Duration") ||
+    self.xbrl.getFactValue("us-gaap:IncomeTaxExpenseBenefit ", "Duration") || 0;
+ 
+    self.xbrl.fields['DepreciationAndAmortization'] = self.xbrl.getFactValue("us-gaap:DepreciationAndAmortization", "Duration") ||
+    self.xbrl.getFactValue("us-gaap:DepreciationAmortizationAndAccretionNet ", "Duration") || self.xbrl.getFactValue("us-gaap:DepreciationDepletionAndAmortization ", "Duration") || 0;
+
+    self.xbrl.fields['Capex'] = self.xbrl.getFactValue("us-gaap:PaymentsToAcquirePropertyPlantAndEquipment", "Duration") || 0;
+    self.xbrl.fields['InterestExpense'] = self.xbrl.getFactValue("us-gaap:InterestExpense", "Duration") || 0;
+    //new fields
+    
     // GrossProfit
     self.xbrl.fields['GrossProfit'] = self.xbrl.getFactValue("us-gaap:GrossProfit", "Duration") ||
     self.xbrl.getFactValue("us-gaap:GrossProfit", "Duration") || 0;
