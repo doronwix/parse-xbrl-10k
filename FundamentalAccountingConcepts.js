@@ -1,3 +1,49 @@
+var _ = require('lodash');
+function loadRaw(xbrlDoc) {
+    var self = this;
+    self.xbrl = xbrlDoc;
+    Object.keys(xbrlDoc.documentJson).forEach((name) => {
+        let nodeList  = _.get(xbrlDoc.documentJson, name);
+        if(Array.isArray(nodeList)){
+            var attacheList = nodeList.map((node) => {
+                let factNode  = null;
+                if (node && node.contextRef && node.contextRef === self.xbrl.fields['ContextForDurations'] || node.contextRef === self.xbrl.fields['ContextForInstants']) {
+                    factNode = node;
+                }
+                
+                if (factNode) {
+                    factValue = factNode['$t'];
+            
+                    for (var key in factNode) {
+                      if (key.indexOf('nil') >= 0) {
+                        factValue = 0;
+                      }
+                    }
+                    if (typeof factValue === 'string') {
+                        factValue = Number(factValue);
+                    }
+                  } else {
+                    return null;
+                  }
+                  self.xbrl.fields[name] = factValue;
+                  return self.xbrl.fields[name];
+            })
+        }
+    });
+    
+    console.log('FUNDAMENTAL ACCOUNTING CONCEPTS:');
+    console.log('Entity registrant name: ' + self.xbrl.fields['EntityRegistrantName']);
+    console.log('CIK: ' + self.xbrl.fields['EntityCentralIndexKey']);
+    console.log('Entity filer category: ' + self.xbrl.fields['EntityFilerCategory']);
+    console.log('Trading symbol: ' + self.xbrl.fields['TradingSymbol']);
+    console.log('Fiscal year: ' + self.xbrl.fields['DocumentFiscalYearFocus']);
+    console.log('Fiscal period: ' + self.xbrl.fields['DocumentFiscalPeriodFocus']);
+    console.log('Document type: ' + self.xbrl.fields['DocumentType']);
+    console.log('Balance Sheet Date (document period end date): ' + self.xbrl.fields['DocumentPeriodEndDate']);
+    console.log('Income Statement Period (YTD, current period, period start date): ' + self.xbrl.fields['IncomeStatementPeriodYTD'] + ' to ' + self.xbrl.fields['BalanceSheetDate']);
+    console.log('Context ID for document period focus (instants): ' + self.xbrl.fields['ContextForInstants']);
+    console.log('Context ID for YTD period (durations): ' + self.xbrl.fields['ContextForDurations']);
+}
 function load(xbrlDoc) {
     var self = this;
     self.xbrl = xbrlDoc;
@@ -752,5 +798,6 @@ function load(xbrlDoc) {
 }
 
 module.exports = {
-    load: load
+    load: load,
+    loadRaw:loadRaw
 };
