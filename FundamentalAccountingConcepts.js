@@ -3,33 +3,34 @@ function loadRaw(xbrlDoc) {
     var self = this;
     self.xbrl = xbrlDoc;
     Object.keys(xbrlDoc.documentJson).forEach((name) => {
-        let nodeList  = _.get(xbrlDoc.documentJson, name);
-        if(Array.isArray(nodeList)){
-            var attacheList = nodeList.map((node) => {
-                let factNode  = null;
-                if (node && node.contextRef && node.contextRef === self.xbrl.fields['ContextForDurations'] || node.contextRef === self.xbrl.fields['ContextForInstants']) {
-                    factNode = node;
-                }
+        if (name.includes('us-gaap') || name.includes('dei')){ 
+            let nodeList  = _.get(xbrlDoc.documentJson, name);
+            if(Array.isArray(nodeList)){
+                var attacheList = nodeList.map((node) => {
+                    let factNode  = null;
+                    if (node && node.contextRef && (node.contextRef === self.xbrl.fields['ContextForDurations'] || node.contextRef === self.xbrl.fields['ContextForInstants'])) {
+                        factNode = node;
+                    }
+                    
+                    if (factNode) {
+                        factValue = factNode['$t'];
                 
-                if (factNode) {
-                    factValue = factNode['$t'];
-            
-                    for (var key in factNode) {
-                      if (key.indexOf('nil') >= 0) {
-                        factValue = 0;
-                      }
+                        for (var key in factNode) {
+                        if (key.indexOf('nil') >= 0) {
+                            factValue = 0;
+                        }
+                        }
+                        if (typeof factValue === 'string') {
+                            factValue = Number(factValue);
+                        }
+                    } else {
+                        return null;
                     }
-                    if (typeof factValue === 'string') {
-                        factValue = Number(factValue);
-                    }
-                  } else {
-                    return null;
-                  }
-                  self.xbrl.fields[name] = factValue;
-                  return self.xbrl.fields[name];
-            })
-        }
-    });
+                    self.xbrl.fields[name] = factValue;
+                    return self.xbrl.fields[name];
+                })
+            }
+        }});
     
     console.log('FUNDAMENTAL ACCOUNTING CONCEPTS:');
     console.log('Entity registrant name: ' + self.xbrl.fields['EntityRegistrantName']);
