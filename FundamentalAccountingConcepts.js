@@ -2,8 +2,9 @@ var _ = require('lodash');
 function loadRaw(xbrlDoc) {
     var self = this;
     self.xbrl = xbrlDoc;
+    let field_count = 0;
     Object.keys(xbrlDoc.documentJson).forEach((name) => {
-        if (name.includes('us-gaap') || name.includes('dei')){ 
+        if (name.includes('us-gaap') && field_count < 200){ 
             let nodeList  = _.get(xbrlDoc.documentJson, name);
             if(Array.isArray(nodeList)){
                 var attacheList = nodeList.map((node) => {
@@ -26,6 +27,7 @@ function loadRaw(xbrlDoc) {
                     } else {
                         return null;
                     }
+                    field_count++;
                     self.xbrl.fields[name] = factValue;
                     return self.xbrl.fields[name];
                 })
