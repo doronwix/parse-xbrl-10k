@@ -4,7 +4,7 @@ function loadRaw(xbrlDoc) {
     self.xbrl = xbrlDoc;
     let field_count = 0;
     Object.keys(xbrlDoc.documentJson).forEach((name) => {
-        if (name.includes('us-gaap') && field_count < 200){ 
+        if (name.includes('us-gaap') && field_count < 100){ 
             let nodeList  = _.get(xbrlDoc.documentJson, name);
             if(Array.isArray(nodeList)){
                 var attacheList = nodeList.map((node) => {
