@@ -24,7 +24,7 @@
       });
     });
   }
-  function parseStr(data) {
+  function parseStr(data, fieldCount = -1) {
     var self = this;
 
     self.loadYear = loadYear;
@@ -65,7 +65,7 @@
         self.fields['BalanceSheetDate'] = currentYearEnd;
 
         // Load the rest of the facts
-        FundamentalAccountingConcepts.loadRaw(self)
+        FundamentalAccountingConcepts.loadRaw(self, fieldCount)
         resolve(self.fields);
       } else {
         reject('No year end found.');

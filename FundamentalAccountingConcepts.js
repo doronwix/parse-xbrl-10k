@@ -1,10 +1,13 @@
 var _ = require('lodash');
-function loadRaw(xbrlDoc) {
+function loadRaw(xbrlDoc, fieldCount) {
     var self = this;
     self.xbrl = xbrlDoc;
+    if (fieldCount == -1){
+        fieldCount = 100000;
+    }
     let field_count = 0;
     Object.keys(xbrlDoc.documentJson).forEach((name) => {
-        if (name.includes('us-gaap') && field_count < 100){ 
+        if (name.includes('us-gaap') && field_count < fieldCount){ 
             let nodeList  = _.get(xbrlDoc.documentJson, name);
             if(Array.isArray(nodeList)){
                 var attacheList = nodeList.map((node) => {
