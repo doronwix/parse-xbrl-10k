@@ -31,11 +31,14 @@ function loadRaw(xbrlDoc, fieldCount) {
                         return null;
                     }
                     field_count++;
-                    self.xbrl.fields[name] = factValue;
-                    return self.xbrl.fields[name];
+                    let fieldName = name.replace("us-gaap:", "");
+                    self.xbrl.fields[fieldName] = factValue;
+                    return self.xbrl.fields[fieldName];
                 })
             }
         }});
+
+    aggregate(self.xbrl.fields);    
     
     console.log('FUNDAMENTAL ACCOUNTING CONCEPTS:');
     console.log('Entity registrant name: ' + self.xbrl.fields['EntityRegistrantName']);
@@ -50,6 +53,24 @@ function loadRaw(xbrlDoc, fieldCount) {
     console.log('Context ID for document period focus (instants): ' + self.xbrl.fields['ContextForInstants']);
     console.log('Context ID for YTD period (durations): ' + self.xbrl.fields['ContextForDurations']);
 }
+
+function aggregate(nodeList){
+	if (nodeList['AssetsNoncurrent'] === null) {
+        if (nodeList['Assets'] && nodeList['CurrentAssets']) {
+            nodeList['NoncurrentAssets'] = nodeList['Assets'] - nodeList['CurrentAssets'];
+        } else {
+            nodeList['NoncurrentAssets'] = 0;
+        }
+    }
+
+    if (nodeList['LiabilitiesAndStockholdersEquity'] === null) {
+        nodeList['LiabilitiesAndStockholdersEquity'] = nodeList['LiabilitiesAndPartnersCapital'];
+        if (nodeList['LiabilitiesAndStockholdersEquity']) {
+            nodeList['LiabilitiesAndStockholdersEquity'] = 0;
+        }
+    }
+}
+
 function load(xbrlDoc) {
     var self = this;
     self.xbrl = xbrlDoc;
