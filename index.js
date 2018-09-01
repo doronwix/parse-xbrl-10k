@@ -65,7 +65,7 @@
         self.fields['BalanceSheetDate'] = currentYearEnd;
 
         // Load the rest of the facts
-        FundamentalAccountingConcepts.loadRaw(self, fieldCount)
+        FundamentalAccountingConcepts.load(self, fieldCount)
         resolve(self.fields);
       } else {
         reject('No year end found.');
