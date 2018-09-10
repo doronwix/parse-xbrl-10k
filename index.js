@@ -208,6 +208,7 @@
       var durationHasExplicitMember;
       var startDateYTD = '2099-01-01';
       var startDate;
+      var context_length;
 
       var durationNodesArr = self.getNodeList([
         'us-gaap:CashAndCashEquivalentsPeriodIncreaseDecrease',
@@ -215,8 +216,13 @@
         'us-gaap:NetIncomeLoss',
         'dei:DocumentPeriodEndDate'
         ]);
-
-        for (var k = 0; k < durationNodesArr.length; k++) {
+        if (self.fields['DocumentType'] === "10-Q"){
+          context_length = 1;
+        }
+        else{
+          context_length = durationNodesArr.length;
+        }
+        for (var k = 0; k < context_length; k++) {
           contextId = durationNodesArr[k].contextRef;
 
           _.forEach(_.get(self.documentJson, 'xbrli:context') || _.get(self.documentJson, 'context'), function(period) {
