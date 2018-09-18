@@ -207,6 +207,9 @@
       var contextPeriod;
       var durationHasExplicitMember;
       var startDateYTD = '2099-01-01';
+      if (self.fields['DocumentType'] === "10-Q"){
+        startDateYTD= '1970-01-01';
+      }
       var startDate;
       var context_length;
 
@@ -216,13 +219,7 @@
         'us-gaap:NetIncomeLoss',
         'dei:DocumentPeriodEndDate'
         ]);
-        if (self.fields['DocumentType'] === "10-Q"){
-          context_length = 1;
-        }
-        else{
-          context_length = durationNodesArr.length;
-        }
-        for (var k = 0; k < context_length; k++) {
+        for (var k = 0; k < durationNodesArr.length; k++) {
           contextId = durationNodesArr[k].contextRef;
 
           _.forEach(_.get(self.documentJson, 'xbrli:context') || _.get(self.documentJson, 'context'), function(period) {
@@ -239,23 +236,27 @@
 
                 // console.log('Context start date:', startDate);
                 // console.log('YTD start date:', startDateYTD);
-
-                if (startDate <= startDateYTD) {
-                  // console.log('Context start date is less than current year to date, replace');
-                  // console.log('Context start date: ', startDate);
-                  // console.log('Current min: ', startDateYTD);
-
-                  startDateYTD = startDate;
-                  contextForDurations = _.get(period, 'id');
-                } else {
-                  // console.log('Context start date is greater than YTD, keep current YTD');
-                  // console.log('Context start date: ', startDate);
+                if (self.fields['DocumentType'] === "10-Q")
+                {
+                  //shortest start date
+                  if (startDate >= startDateYTD) {
+                    if ((period.id).match(/C_(\d{5,10})_(\d{6,8})_(\d{6,8})/) || (period.id).match(/FD\d{4}Q.*QTD/)) { 
+                      startDateYTD = startDate;
+                      contextForDurations = _.get(period, 'id');
+                    }
+                    else if ((period.id).match(/FD\d{4}Q.*YTD/)) { 
+                      startDateYTD = startDate;
+                      contextForDurations = _.get(period, 'id');
+                    }
+                  }              
+                }  
+                else{   
+                  //longest start date
+                  if (startDate <= startDateYTD) {
+                      startDateYTD = startDate;
+                      contextForDurations = _.get(period, 'id');
+                  } 
                 }
-
-                // console.log('Use context ID: ', contextForDurations);
-                // console.log('Current min: ', startDateYTD);
-                // console.log('');
-                // console.log('Use context: ', contextForDurations);
               }
             }
           }
