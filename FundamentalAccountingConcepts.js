@@ -377,8 +377,8 @@ function load(xbrlDoc) {
     self.xbrl.getFactValue("us-gaap:IncomeTaxExpenseBenefit ", DocBasedPeriod) || 0;
     
     self.xbrl.fields['DepreciationAndAmortization'] = self.xbrl.getFactValue("us-gaap:DepreciationAndAmortization", DocBasedPeriod) ||
-    self.xbrl.getFactValue("us-gaap:DepreciationAmortizationAndAccretionNet ", DocBasedPeriod) ||
-    self.xbrl.getFactValue("us-gaap:DepreciationDepletionAndAmortization ", DocBasedPeriod) || 0;
+    self.xbrl.getFactValue("us-gaap:DepreciationAmortizationAndAccretionNet", DocBasedPeriod) ||
+    self.xbrl.getFactValue("us-gaap:DepreciationDepletionAndAmortization", DocBasedPeriod) || 0;
    
     self.xbrl.fields['Capex'] = self.xbrl.getFactValue("us-gaap:PaymentsToAcquirePropertyPlantAndEquipment", DocBasedPeriod) || 0;
     self.xbrl.fields['InterestExpense'] = self.xbrl.getFactValue("us-gaap:InterestExpense", DocBasedPeriod) || 0;
@@ -450,7 +450,16 @@ function load(xbrlDoc) {
     // NetIncomeAvailableToCommonStockholdersBasic
     self.xbrl.fields['NetIncomeAvailableToCommonStockholdersBasic'] = self.xbrl.getFactValue("us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic", DocBasedPeriod) || 0;
    
-    // #PreferredStockDividendsAndOtherAdjustments
+   //AccountsReceivableNetCurrent
+    self.xbrl.fields['AccountsReceivable'] = self.xbrl.getFactValue('us-gaap:AccountsReceivableNetCurrent', DocBasedPeriod) || 0; 
+
+   //Inventories
+   self.xbrl.fields['Inventories'] = self.xbrl.getFactValue('us-gaap:InventoryNet', DocBasedPeriod)  || self.xbrl.getFactValue("us-gaap:InventoryGross", DocBasedPeriod) || 0; 
+   
+   //AccountsPayableCurrent
+   self.xbrl.fields['AccountsPayable'] = self.xbrl.getFactValue('us-gaap:AccountsPayableCurrent', DocBasedPeriod) || 0; 
+
+   // #PreferredStockDividendsAndOtherAdjustments
     self.xbrl.fields['PreferredStockDividendsAndOtherAdjustments'] = self.xbrl.getFactValue("us-gaap:PreferredStockDividendsAndOtherAdjustments", DocBasedPeriod) || 0;
    
     // #NetIncomeAttributableToNoncontrollingInterest
@@ -458,7 +467,13 @@ function load(xbrlDoc) {
    
     // #NetIncomeAttributableToParent
     self.xbrl.fields['NetIncomeAttributableToParent'] = self.xbrl.getFactValue("us-gaap:NetIncomeLoss", DocBasedPeriod) || 0;
-   
+ 
+    //Depreciation
+    self.xbrl.fields['Depreciation'] = self.xbrl.getFactValue("us-gaap:Depreciation", DocBasedPeriod) || 0;
+
+    //AmortizationOfIntangibleAssets
+    self.xbrl.fields['AmortizationOfIntangibleAssets'] = self.xbrl.getFactValue("us-gaap:AmortizationOfIntangibleAssets", DocBasedPeriod) || 0;
+
     // OtherComprehensiveIncome
     self.xbrl.fields['OtherComprehensiveIncome'] = self.xbrl.getFactValue("us-gaap:OtherComprehensiveIncomeLossNetOfTax", DocBasedPeriod) ||
     self.xbrl.getFactValue("us-gaap:OtherComprehensiveIncomeLossNetOfTax", DocBasedPeriod) || 0;
@@ -491,7 +506,12 @@ function load(xbrlDoc) {
     self.xbrl.fields['IncomeFromContinuingOperationsAfterTax']=== 0) {
     self.xbrl.fields['IncomeFromContinuingOperationsAfterTax'] = self.xbrl.fields['NetIncomeLoss'] - self.xbrl.fields['IncomeFromDiscontinuedOperations'] - self.xbrl.fields['ExtraordaryItemsGainLoss'];
     }
-   
+ 
+    // Impute DepreciationDepletionAndAmortization!
+    if (self.xbrl.fields['DepreciationAndAmortization'] === 0 && self.xbrl.fields['Depreciation'] !== 0 && self.xbrl.fields['AmortizationOfIntangibleAssets'] !== 0 ){
+        self.xbrl.fields['DepreciationAndAmortization'] = self.xbrl.fields['Depreciation'] + self.xbrl.fields['AmortizationOfIntangibleAssets'];
+    }
+
     // Impute: Net income attributable to parent if it does not exist
     if (self.xbrl.fields['NetIncomeAttributableToParent'] === 0 &&
     self.xbrl.fields['NetIncomeAttributableToNoncontrollingInterest'] === 0 &&
