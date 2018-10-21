@@ -152,6 +152,12 @@ function load(xbrlDoc) {
 
     //CashAndCashEquivalents
  self.xbrl.fields['CashAndCashEquivalents'] = self.xbrl.getFactValue('us-gaap:CashAndCashEquivalentsAtCarryingValue', 'Instant') || 0;   
+ 
+ //DepreciationAndAmortization
+ self.xbrl.fields['DepreciationAndAmortization'] = self.xbrl.getFactValue("us-gaap:DepreciationAndAmortization", 'Instant') ||
+ self.xbrl.getFactValue("us-gaap:DepreciationAmortizationAndAccretionNet", 'Instant') ||
+ self.xbrl.getFactValue("us-gaap:DepreciationDepletionAndAmortization", 'Instant') || 0;
+
  //end new fields:
  
  // TemporaryEquity
@@ -375,10 +381,6 @@ function load(xbrlDoc) {
    
     self.xbrl.fields['TaxPaid'] = self.xbrl.getFactValue("us-gaap:IncomeTaxesPaidNet", DocBasedPeriod) ||
     self.xbrl.getFactValue("us-gaap:IncomeTaxExpenseBenefit ", DocBasedPeriod) || 0;
-    
-    self.xbrl.fields['DepreciationAndAmortization'] = self.xbrl.getFactValue("us-gaap:DepreciationAndAmortization", DocBasedPeriod) ||
-    self.xbrl.getFactValue("us-gaap:DepreciationAmortizationAndAccretionNet", DocBasedPeriod) ||
-    self.xbrl.getFactValue("us-gaap:DepreciationDepletionAndAmortization", DocBasedPeriod) || 0;
    
     self.xbrl.fields['Capex'] = self.xbrl.getFactValue("us-gaap:PaymentsToAcquirePropertyPlantAndEquipment", DocBasedPeriod) || 0;
     self.xbrl.fields['InterestExpense'] = self.xbrl.getFactValue("us-gaap:InterestExpense", DocBasedPeriod) || 0;
@@ -451,13 +453,13 @@ function load(xbrlDoc) {
     self.xbrl.fields['NetIncomeAvailableToCommonStockholdersBasic'] = self.xbrl.getFactValue("us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic", DocBasedPeriod) || 0;
    
    //AccountsReceivableNetCurrent
-    self.xbrl.fields['AccountsReceivable'] = self.xbrl.getFactValue('us-gaap:AccountsReceivableNetCurrent', DocBasedPeriod) || 0; 
+    self.xbrl.fields['AccountsReceivable'] = self.xbrl.getFactValue('us-gaap:AccountsReceivableNetCurrent', 'Instant') || 0; 
 
    //Inventories
-   self.xbrl.fields['Inventories'] = self.xbrl.getFactValue('us-gaap:InventoryNet', DocBasedPeriod)  || self.xbrl.getFactValue("us-gaap:InventoryGross", DocBasedPeriod) || 0; 
+   self.xbrl.fields['Inventories'] = self.xbrl.getFactValue('us-gaap:InventoryNet', 'Instant')  || self.xbrl.getFactValue("us-gaap:InventoryGross", 'Instant') || 0; 
    
    //AccountsPayableCurrent
-   self.xbrl.fields['AccountsPayable'] = self.xbrl.getFactValue('us-gaap:AccountsPayableCurrent', DocBasedPeriod) || 0; 
+   self.xbrl.fields['AccountsPayable'] = self.xbrl.getFactValue('us-gaap:AccountsPayableCurrent', 'Instant') || 0; 
 
    // #PreferredStockDividendsAndOtherAdjustments
     self.xbrl.fields['PreferredStockDividendsAndOtherAdjustments'] = self.xbrl.getFactValue("us-gaap:PreferredStockDividendsAndOtherAdjustments", DocBasedPeriod) || 0;
