@@ -1,36 +1,51 @@
 {
-  "name": "parse-xbrl-10k",
-  "description": "Module to parse xbrl documents and output json.",
-  "version": "0.1.0",
-  "dependencies": {
-    "bluebird": "^3.3.1",
-    "lodash": "^4.5.1",
-    "xml2json": "^0.9.0"
+  "_from": "git+https://github.com/doronwix/parse-xbrl-10k.git",
+  "_id": "parse-xbrl-10k@0.1.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/parse-xbrl-10k",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "parse-xbrl-10k@git+https://github.com/doronwix/parse-xbrl-10k.git",
+    "name": "parse-xbrl-10k",
+    "escapedName": "parse-xbrl-10k",
+    "rawSpec": "git+https://github.com/doronwix/parse-xbrl-10k.git",
+    "saveSpec": "git+https://github.com/doronwix/parse-xbrl-10k.git",
+    "fetchSpec": "https://github.com/doronwix/parse-xbrl-10k.git",
+    "gitCommittish": null
   },
-  "main": "index.js",
-  "files": [
-    "FundamentalAccountingConcepts.js",
-    "index.js"
+  "_requiredBy": [
+    "/"
   ],
-  "scripts": {
-    "test": "jasmine-node test/index.spec.js"
+  "_resolved": "git+https://github.com/doronwix/parse-xbrl-10k.git#60fcb2e1d4c2642a797e2506adab760b3e264f7d",
+  "_spec": "parse-xbrl-10k@git+https://github.com/doronwix/parse-xbrl-10k.git",
+  "_where": "C:\\sandbox\\versions\\dcfServer",
+  "author": {
+    "name": "Emily Coco",
+    "email": "emilymcoco@gmail.com"
   },
-  "publishConfig": {
-    "registry": "http://registry.npmjs.org"
+  "bundleDependencies": false,
+  "dependencies": {
+    "bluebird": "latest",
+    "lodash": "latest",
+    "xml2json": "latest"
   },
-  "author": "Emily Coco <emilymcoco@gmail.com>",
-  "license": "MIT",
+  "deprecated": false,
+  "description": "Module to parse xbrl documents and output json.",
   "devDependencies": {
     "eslint": "^2.1.0",
     "eslint-config-clock": "^1.0.0",
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-standard": "^1.3.0",
-    "jasmine-node": "^1.14.5"
+    "fast-xml-parser": "^3.17.4",
+    "jasmine-node": "latest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:emilycoco/parse-xbrl.git"
-  },
+  "files": [
+    "FundamentalAccountingConcepts.js",
+    "index.js"
+  ],
+  "homepage": "https://github.com/emilycoco/parse-xbrl#readme",
   "keywords": [
     "xbrl",
     "xml",
@@ -39,7 +54,18 @@
     "edgar",
     "sec"
   ],
-  "bugs": {
-    "url": "git@github.com:emilycoco/parse-xbrl.git/issues"
-  }
+  "license": "MIT",
+  "main": "index.js",
+  "name": "parse-xbrl-10k",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/emilycoco/parse-xbrl.git"
+  },
+  "scripts": {
+    "test": "jasmine-node test/index.spec.js"
+  },
+  "version": "0.1.0"
 }
